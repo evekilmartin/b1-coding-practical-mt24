@@ -2,6 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 import numpy as np
 import matplotlib.pyplot as plt
+import csv
 from .terrain import generate_reference_and_limits
 
 class Submarine:
@@ -75,8 +76,16 @@ class Mission:
 
     @classmethod
     def from_csv(cls, file_name: str):
-        # You are required to implement this method
-        pass
+        reference, cave_height, cave_depth = [], [], []
+ 
+        with open(file_name, newline='') as missioncsv:
+            reader = csv.reader(missioncsv)
+            for row in reader:
+                reference.append(row[0])    
+                cave_height.append(row[1])    
+                cave_depth.append(row[2])
+        
+        return cls(reference,cave_height,cave_depth)
 
 
 class ClosedLoop:
